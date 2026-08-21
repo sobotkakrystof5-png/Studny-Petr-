@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"/Users/krystofsobotka/Desktop/Petráň - studny\" 2>/dev/null || exit 0; mkdir -p memory 2>/dev/null; INPUT=$(cat); if command -v jq >/dev/null 2>&1; then TOOL=$(printf '%s' \"$INPUT\" | jq -r '.tool_name // \"unknown\"' 2>/dev/null); FILE=$(printf '%s' \"$INPUT\" | jq -r '.tool_input.file_path // \"unknown\"' 2>/dev/null); else TOOL=\"unknown\"; FILE=\"unknown\"; fi; REL=\"${FILE#/Users/krystofsobotka/Desktop/Petráň - studny/}\"; printf '[%s] %s %s\\n' \"$(date '+%Y-%m-%dT%H:%M:%S%z')\" \"$TOOL\" \"$REL\" >> memory/activity.log 2>/dev/null; exit 0",
+            "statusMessage": "Zapisuji do memory/activity.log..."
+          }
+        ]
+      }
+    ]
+  }
+}
