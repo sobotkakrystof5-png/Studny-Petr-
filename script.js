@@ -153,6 +153,64 @@
     status.classList.toggle("success", kind === "success");
   }
 
+  /* ---------- galerie: lightbox zvětšení ---------- */
+  var lightbox = document.getElementById("lightbox");
+  var lightboxContent = document.getElementById("lightboxContent");
+  var lightboxCaption = document.getElementById("lightboxCaption");
+  var lightboxClose = document.getElementById("lightboxClose");
+  var galleryItems = document.querySelectorAll(".gallery-item");
+  var lastGalleryTrigger = null;
+
+  function openLightbox(trigger) {
+    lastGalleryTrigger = trigger;
+    var img = trigger.querySelector("img");
+    var caption = trigger.getAttribute("data-caption") || "";
+
+    if (img) {
+      lightboxContent.innerHTML = "";
+      var bigImg = document.createElement("img");
+      bigImg.src = img.currentSrc || img.src;
+      bigImg.alt = img.alt || caption;
+      lightboxContent.appendChild(bigImg);
+    } else {
+      lightboxContent.innerHTML = trigger.innerHTML;
+      var placeholder = lightboxContent.firstElementChild;
+      if (placeholder) placeholder.classList.remove("gallery-item");
+    }
+    lightboxCaption.textContent = caption;
+
+    lightbox.hidden = false;
+    document.body.style.overflow = "hidden";
+    lightboxClose.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.hidden = true;
+    lightboxContent.innerHTML = "";
+    document.body.style.overflow = "";
+    if (lastGalleryTrigger) lastGalleryTrigger.focus();
+  }
+
+  galleryItems.forEach(function (item) {
+    item.addEventListener("click", function () {
+      openLightbox(item);
+    });
+  });
+
+  lightbox.querySelectorAll("[data-lightbox-close]").forEach(function (el) {
+    el.addEventListener("click", closeLightbox);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !lightbox.hidden) {
+      closeLightbox();
+    }
+    if (e.key === "Tab" && !lightbox.hidden) {
+      e.preventDefault();
+      lightboxClose.focus();
+    }
+  });
+
   /* ---------- proces: scroll-triggered reveal (left to right) ---------- */
   var processSteps = document.querySelectorAll(".process-step");
   if (processSteps.length && "IntersectionObserver" in window) {

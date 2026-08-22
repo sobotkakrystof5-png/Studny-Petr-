@@ -269,12 +269,28 @@
 <section class="section container" id="galerie">
   <h2>Galerie</h2>
   <div class="media-grid">
-    <div class="photo-placeholder img"><svg aria-hidden="true"><use href="#icon-camera"></use></svg><span>Vrtání studny</span></div>
-    <div class="photo-placeholder img"><svg aria-hidden="true"><use href="#icon-camera"></use></svg><span>Čištění a servis</span></div>
-    <div class="photo-placeholder img"><svg aria-hidden="true"><use href="#icon-camera"></use></svg><span>Tým při práci</span></div>
+    <button type="button" class="photo-placeholder img gallery-item" data-caption="Vrtání studny"><svg aria-hidden="true"><use href="#icon-camera"></use></svg><span>Vrtání studny</span></button>
+    <button type="button" class="photo-placeholder img gallery-item" data-caption="Čištění a servis"><svg aria-hidden="true"><use href="#icon-camera"></use></svg><span>Čištění a servis</span></button>
+    <button type="button" class="photo-placeholder img gallery-item" data-caption="Tým při práci"><svg aria-hidden="true"><use href="#icon-camera"></use></svg><span>Tým při práci</span></button>
+    <button type="button" class="photo-placeholder img gallery-item" data-caption="Vrtná souprava"><svg aria-hidden="true"><use href="#icon-camera"></use></svg><span>Vrtná souprava</span></button>
+    <button type="button" class="photo-placeholder img gallery-item" data-caption="Instalace čerpadla"><svg aria-hidden="true"><use href="#icon-camera"></use></svg><span>Instalace čerpadla</span></button>
+    <button type="button" class="photo-placeholder img gallery-item" data-caption="Prohlubování studny"><svg aria-hidden="true"><use href="#icon-camera"></use></svg><span>Prohlubování studny</span></button>
+    <button type="button" class="photo-placeholder img gallery-item" data-caption="Revize a kontrola"><svg aria-hidden="true"><use href="#icon-camera"></use></svg><span>Revize a kontrola</span></button>
+    <button type="button" class="photo-placeholder img gallery-item" data-caption="Vodní pohotovost 24/7"><svg aria-hidden="true"><use href="#icon-camera"></use></svg><span>Vodní pohotovost 24/7</span></button>
+    <button type="button" class="photo-placeholder img gallery-item" data-caption="Dokončená studna"><svg aria-hidden="true"><use href="#icon-camera"></use></svg><span>Dokončená studna</span></button>
+    <button type="button" class="photo-placeholder img gallery-item" data-caption="Úklid pozemku po realizaci"><svg aria-hidden="true"><use href="#icon-camera"></use></svg><span>Úklid pozemku po realizaci</span></button>
   </div>
-  <p style="max-width:60ch;">Reálné fotografie realizací doplníme, jakmile je od klienta dostaneme. Dlaždice výše zatím jen drží místo a poměr stran.</p>
+  <p style="max-width:60ch;">Reálné fotografie realizací doplníme, jakmile je od klienta dostaneme. Dlaždice výše zatím jen drží místo a poměr stran — kliknutím na dlaždici si ji prohlédnete zvětšenou.</p>
 </section>
+
+<div class="lightbox" id="lightbox" hidden>
+  <div class="lightbox-backdrop" data-lightbox-close></div>
+  <div class="lightbox-dialog" role="dialog" aria-modal="true" aria-label="Zvětšená fotografie">
+    <button type="button" class="lightbox-close" id="lightboxClose" data-lightbox-close aria-label="Zavřít zvětšenou fotografii">&times;</button>
+    <div class="lightbox-content" id="lightboxContent"></div>
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
+</div>
 
 <!-- ============ FAQ ============ -->
 <section class="section container" id="faq">
