@@ -13,21 +13,21 @@ Zdroje: údaje od uživatele (chat) + veřejný rejstřík ARES (ověření podl
 - **E-mail:** petran111@seznam.cz
 - **NACE (ARES, informativně):** 016 (podpůrné činnosti pro zemědělství), 43120 (příprava staveniště/zemní práce), 81290/81230 (ostatní úklidové činnosti) — orientační, nepoužívat jako doslovný popis služeb
 
-## Služby (potvrzeno klientem v chatu)
+## Služby (potvrzeno klientem, aktualizace 2026-09-09)
 
-- Vrtání studní
-- Čištění studní
-- Prohlubování studní
-- Vodní pohotovost — 24/7
-
-Šablona počítá s cca 5 kartami služeb — zbylé sloty zůstávají jako placeholder, klient doplní později. Nevymýšlet další služby.
+- **Kopané studny:** realizace nových studní, čištění, renovace, montáž čerpadel, renovace a montáž ručních pump a prohlubování.
+- **Servis vrtaných studní:** čištění stávajících vrtaných studní, zhotovení zhlaví a montáž či výměna čerpadel. Firma nové vrtané studny nevrtá.
+- **Vyhledávání pramene:** provádí majitel firmy jako proutkař se zárukou.
+- **Aktuální výpadky vody:** firma je řeší, bez příslibu pohotovosti 24/7.
 
 ## Tón a vizuální směr (poznámky klienta)
 
 - **Vizuální motiv (signatura):** kapka vody — použít jako opakující se vizuální prvek napříč webem (ne jednorázová dekorace)
 - **Tón:** přátelský ("friendly usage"), ne strojově korporátní
 - **Copy/hero:** silná výzva (CTA), první dojem musí zabrat do cca 5 vteřin — hero musí být okamžitě čitelný a jasný
-- **Tým:** parta o 4 lidech — může nést lehce osobní/týmovou rovinu (ne ryze anonymní firma), texty mají být kvalitní a čtivé, ne šablonovité
+- **Tým:** spolehlivý tým, bez uvedení počtu lidí. Zákazník se vždy domlouvá s majitelem firmy.
+- **Působnost:** celá Česká republika.
+- **Kontakt:** pouze telefon a e-mail; kontaktní formulář se na webu nepoužívá.
 
 ## Rozhodnuto (2026-08-19, druhé kolo)
 

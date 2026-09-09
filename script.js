@@ -1,6 +1,29 @@
 (function () {
   "use strict";
 
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------- header: shadow on scroll ---------- */
+  var siteHeader = document.querySelector("header.site");
+  var headerScrollTicking = false;
+  function updateHeaderShadow() {
+    if (siteHeader) {
+      siteHeader.classList.toggle("is-scrolled", window.scrollY > 8);
+    }
+    headerScrollTicking = false;
+  }
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!headerScrollTicking) {
+        window.requestAnimationFrame(updateHeaderShadow);
+        headerScrollTicking = true;
+      }
+    },
+    { passive: true }
+  );
+  updateHeaderShadow();
+
   /* ---------- mobile drawer ---------- */
   var hamburger = document.getElementById("hamburger");
   var drawer = document.getElementById("mobile-drawer");
@@ -48,116 +71,13 @@
     }
   });
 
-  /* ---------- contact form: honeypot + inline validation + API submit ---------- */
-  var form = document.getElementById("poptavkaForm");
-  var status = document.getElementById("formStatus");
-  var submitBtn = document.getElementById("submitBtn");
-  var submitBtnDefaultLabel = submitBtn.textContent;
-
-  var fieldConfig = [
-    { id: "jmeno", hintValid: "Zadejte prosím jméno alespoň o 2 znacích.", hintError: "Jméno musí mít alespoň 2 znaky." },
-    { id: "email", hintValid: "Zadejte prosím platnou e-mailovou adresu.", hintError: "Zadejte platnou e-mailovou adresu." },
-    { id: "zprava", hintValid: "Popište prosím poptávku (alespoň 10 znaků).", hintError: "Zpráva musí mít alespoň 10 znaků." }
-  ];
-
-  fieldConfig.forEach(function (cfg) {
-    var input = document.getElementById(cfg.id);
-    input.addEventListener("blur", function () {
-      input.setAttribute("data-touched", "true");
-      updateHint(cfg, input);
-    });
-    input.addEventListener("input", function () {
-      if (input.getAttribute("data-touched") === "true") {
-        updateHint(cfg, input);
-      }
-    });
-  });
-
-  function updateHint(cfg, input) {
-    var hint = input.parentElement.querySelector(".hint");
-    if (!hint) return;
-    if (input.validity.valid) {
-      hint.textContent = cfg.hintValid;
-      hint.classList.remove("error");
-    } else {
-      hint.textContent = cfg.hintError;
-      hint.classList.add("error");
-    }
-  }
-
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    var honeypot = form.querySelector(".honeypot");
-    if (honeypot.value.trim() !== "") {
-      return;
-    }
-
-    fieldConfig.forEach(function (cfg) {
-      var input = document.getElementById(cfg.id);
-      input.setAttribute("data-touched", "true");
-      updateHint(cfg, input);
-    });
-
-    if (!form.checkValidity()) {
-      var firstInvalid = form.querySelector(":invalid");
-      if (firstInvalid) firstInvalid.focus();
-      showStatus("Zkontrolujte prosím vyznačená pole formuláře.", "error");
-      return;
-    }
-
-    var jmeno = document.getElementById("jmeno").value.trim();
-    var email = document.getElementById("email").value.trim();
-    var telefon = document.getElementById("telefon").value.trim();
-    var zprava = document.getElementById("zprava").value.trim();
-    var souhlas = document.getElementById("souhlas").checked;
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Odesílám…";
-    showStatus("Odesílám poptávku…", "loading");
-
-    fetch("/api/kontakt", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        jmeno: jmeno,
-        email: email,
-        telefon: telefon,
-        zprava: zprava,
-        souhlas: souhlas,
-        predmet_web: honeypot.value
-      })
-    })
-      .then(function (res) {
-        if (!res.ok) throw new Error("send_failed");
-        submitBtn.disabled = false;
-        submitBtn.textContent = submitBtnDefaultLabel;
-        form.reset();
-        fieldConfig.forEach(function (cfg) {
-          document.getElementById(cfg.id).removeAttribute("data-touched");
-        });
-        showStatus("Děkujeme, poptávka byla odeslána. Ozveme se vám zpět co nejdřív.", "success");
-      })
-      .catch(function () {
-        submitBtn.disabled = false;
-        submitBtn.textContent = submitBtnDefaultLabel;
-        showStatus("Poptávku se nepodařilo odeslat. Zkuste to prosím znovu, nebo nám rovnou zavolejte na +420 605 753 751.", "error");
-      });
-  });
-
-  function showStatus(message, kind) {
-    status.textContent = message;
-    status.hidden = false;
-    status.classList.toggle("loading", kind === "loading");
-    status.classList.toggle("error", kind === "error");
-    status.classList.toggle("success", kind === "success");
-  }
-
   /* ---------- galerie: lightbox zvětšení ---------- */
   var lightbox = document.getElementById("lightbox");
   var lightboxContent = document.getElementById("lightboxContent");
   var lightboxCaption = document.getElementById("lightboxCaption");
   var lightboxClose = document.getElementById("lightboxClose");
+  var lightboxPrev = document.getElementById("lightboxPrev");
+  var lightboxNext = document.getElementById("lightboxNext");
   var galleryItems = document.querySelectorAll(".gallery-item");
   var lastGalleryTrigger = null;
 
@@ -181,14 +101,29 @@
 
     lightbox.hidden = false;
     document.body.style.overflow = "hidden";
+    window.requestAnimationFrame(function () {
+      lightbox.classList.add("is-open");
+    });
     lightboxClose.focus();
   }
 
   function closeLightbox() {
-    lightbox.hidden = true;
-    lightboxContent.innerHTML = "";
+    lightbox.classList.remove("is-open");
     document.body.style.overflow = "";
     if (lastGalleryTrigger) lastGalleryTrigger.focus();
+    window.setTimeout(
+      function () {
+        lightbox.hidden = true;
+        lightboxContent.innerHTML = "";
+      },
+      reduceMotion ? 0 : 250
+    );
+  }
+
+  function moveLightbox(direction) {
+    var currentIndex = Array.prototype.indexOf.call(galleryItems, lastGalleryTrigger);
+    var nextIndex = (currentIndex + direction + galleryItems.length) % galleryItems.length;
+    openLightbox(galleryItems[nextIndex]);
   }
 
   galleryItems.forEach(function (item) {
@@ -200,37 +135,108 @@
   lightbox.querySelectorAll("[data-lightbox-close]").forEach(function (el) {
     el.addEventListener("click", closeLightbox);
   });
+  lightboxPrev.addEventListener("click", function () { moveLightbox(-1); });
+  lightboxNext.addEventListener("click", function () { moveLightbox(1); });
 
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && !lightbox.hidden) {
       closeLightbox();
     }
+    if (e.key === "ArrowLeft" && !lightbox.hidden) moveLightbox(-1);
+    if (e.key === "ArrowRight" && !lightbox.hidden) moveLightbox(1);
     if (e.key === "Tab" && !lightbox.hidden) {
       e.preventDefault();
-      lightboxClose.focus();
+      if (document.activeElement === lightboxPrev) {
+        lightboxNext.focus();
+      } else if (document.activeElement === lightboxNext) {
+        lightboxClose.focus();
+      } else {
+        lightboxPrev.focus();
+      }
     }
   });
 
-  /* ---------- proces: scroll-triggered reveal (left to right) ---------- */
-  var processSteps = document.querySelectorAll(".process-step");
-  if (processSteps.length && "IntersectionObserver" in window) {
-    var processObserver = new IntersectionObserver(
+  /* ---------- scroll-triggered reveal: proces + kartové mřížky ---------- */
+  function setupReveal(selector, threshold) {
+    var items = document.querySelectorAll(selector);
+    if (!items.length) return;
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      items.forEach(function (el) {
+        el.classList.add("is-visible");
+      });
+      return;
+    }
+    var observer = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
-            processObserver.unobserve(entry.target);
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: threshold || 0.2 }
     );
-    processSteps.forEach(function (step) {
-      processObserver.observe(step);
-    });
-  } else {
-    processSteps.forEach(function (step) {
-      step.classList.add("is-visible");
+    items.forEach(function (el) {
+      observer.observe(el);
     });
   }
+
+  setupReveal(".process-grid > .process-step", 0.3);
+  setupReveal(".value-grid > div");
+  setupReveal(".text-card-grid > .text-card");
+  setupReveal(".media-grid > .gallery-item", 0.15);
+  setupReveal(".reference-grid > .ref-card", 0.15);
+
+  /* ---------- FAQ: plynulé rozbalení/sbalení ---------- */
+  document.querySelectorAll(".faq-item").forEach(function (details) {
+    var summary = details.querySelector("summary");
+    var content = details.querySelector("p");
+    if (!summary || !content || reduceMotion) return;
+
+    function expand() {
+      details.open = true;
+      var target = content.scrollHeight;
+      content.style.overflow = "hidden";
+      content.style.maxHeight = "0px";
+      content.style.opacity = "0";
+      content.getBoundingClientRect();
+      content.style.transition = "max-height .25s ease, opacity .2s ease";
+      content.style.maxHeight = target + "px";
+      content.style.opacity = "1";
+      content.addEventListener("transitionend", function handler() {
+        content.style.maxHeight = "none";
+        content.style.overflow = "";
+        content.removeEventListener("transitionend", handler);
+      });
+    }
+
+    function collapse() {
+      var current = content.scrollHeight;
+      content.style.overflow = "hidden";
+      content.style.maxHeight = current + "px";
+      content.style.opacity = "1";
+      content.getBoundingClientRect();
+      content.style.transition = "max-height .2s ease, opacity .15s ease";
+      content.style.maxHeight = "0px";
+      content.style.opacity = "0";
+      content.addEventListener("transitionend", function handler() {
+        details.open = false;
+        content.style.maxHeight = "";
+        content.style.overflow = "";
+        content.style.opacity = "";
+        content.style.transition = "";
+        content.removeEventListener("transitionend", handler);
+      });
+    }
+
+    summary.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (details.open) {
+        collapse();
+      } else {
+        expand();
+      }
+    });
+  });
 })();

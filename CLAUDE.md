@@ -35,32 +35,27 @@ Než uděláš jakoukoli změnu kódu nebo začneš na novém promptu:
 - Nikdy nekecej. Pokud něco nevíš, nefunguje to, nebo si nejsi jistý — řekni to přímo.
 - Buď konzistentní. Stejná laťka platí na začátku projektu i na konci.
 - Nedělej tichá rozhodnutí za uživatele. Pokud existuje volba mezi přístupy s různými kompromisy, řekni to stručně a řekni, co doporučuješ a proč.
-- Před jakýmkoli "je to hotové" ověř Definition of Done z `AGENTS.md` sekce 7 — formulář skutečně něco odešle (otestuj to), responzivita funguje na mobilu/tabletu/desktopu, žádné console chyby, nic neláme přístupnost (kontrast, ovladatelnost klávesnicí).
+- Před jakýmkoli "je to hotové" ověř Definition of Done z `AGENTS.md` sekce 7 — kontaktní odkazy skutečně fungují, responzivita funguje na mobilu/tabletu/desktopu, žádné console chyby, nic neláme přístupnost (kontrast, ovladatelnost klávesnicí).
 - Pokud si nejsi jistý — zeptej se hned. Nehádej, nedoplňuj chybějící informaci vlastním odhadem. Platí to stejně pro fotky, texty i technická/designová rozhodnutí. Zejména: **nikdy nevymýšlej fakta o klientovi** (roky praxe, počty realizací, ceny, reference) — viz `AGENTS.md` sekce 3 a 6.
 
 ## 4. Kontext projektu (shrnutí)
 
-- **Klient:** Petráň — studny (přesný obchodní název, IČO/DIČ, adresa, telefon, e-mail zatím nepotvrzeny — viz `AGENTS.md` sekce 3)
-- **Obor/nabídka:** studnařské práce (vrtání/kopání/čištění/servis studní) — přesný rozsah služeb zatím nepotvrzen klientem
+- **Klient:** Studnářství Petráň; potvrzené údaje jsou v `studny-prompt.md`.
+- **Obor/nabídka:** kopané studny, servis stávajících vrtaných studní, vyhledávání pramene a řešení aktuálních výpadků vody po celé ČR. Nové vrtané studny firma nevrtá.
 - **Tech stack:** vanilla HTML/CSS/JS, bez frameworku, bez build kroku — dané založenými soubory (`index.html`, `style.css`, `script.js`)
 - **Struktura webu:** jednostránkový scrollovací web s kotvovou navigací (`#o-nas`, `#sluzby`, `#galerie`, `#kontakt`), podle šablony `onepage-craftsman-site-layout` — **toto je závazné rozhodnutí**, ne návrh otevřený k tiché revizi
 - **Design:** zatím nezvolen (barvy, fonty, vizuální motiv) — musí vzniknout jako vlastní systém inspirovaný oborem studnařství, ne převzatý z šedé skeleton šablony
-- **Fotky:** stav zatím neznámý — nutno zjistit od uživatele, jestli existují reálné fotky, nebo se pracuje s placeholdery (viz `AGENTS.md` sekce 3 a 6)
-- **Hlavní priorita:** originalita, žádný "AI šablona" vzhled, věcná důvěryhodná prezentace, jasné vedení návštěvníka k poptávce (telefon/formulář)
+- **Fotky:** nejsou k dispozici, používají se popsané placeholdery.
+- **Hlavní priorita:** originalita, žádný "AI šablona" vzhled, věcná důvěryhodná prezentace, jasné vedení návštěvníka ke kontaktu telefonem nebo e-mailem.
 - Plný postup je v `AGENTS.md` v kořeni repa — když je cokoliv nejasné, je to zdroj pravdy pro "jak", tento soubor je zdroj pravdy pro "jak se chovat" a "kde jsme".
 
 ## 5. Stav projektu a rozhodnutí (aktualizovat průběžně)
 
 Tuto sekci aktualizuj na konci každé session — je to jediný způsob, jak další session (která si nic z téhle nepamatuje) naváže v kontinuitě. Zápisy krátké, jen fakta, ne popis procesu.
 
-- **Aktuální fáze:** web je **živý na produkci** — https://studny-petr.vercel.app (Vercel projekt propojený s GitHub repem, auto-deploy na push do `main`, poslední push i deploy ověřen 2026-08-22). Design systém, tech stack (vanilla HTML/CSS/JS) a one-pager struktura beze změny. **RESEND_API_KEY zatím není nastavený** (ověřeno `vercel env ls`) — formulář proto na produkci teď reálně vrací chybu, dokud klient klíč nedodá. Detail viz `memory/memory.md`.
-- **Poslední rozhodnutí:** 2026-08-22 — formulář přešel z `mailto:` stopgapu na Resend (uživatelova volba, ne doporučené Formspree/Web3Forms) přes novou Vercel serverless funkci `api/kontakt.js` (Resend vyžaduje tajný klíč, nejde bezpečně volat přímo z prohlížeče). Hosting: Vercel (potvrzeno uživatelem). Galerie zredukována na 3 placeholdery, filtrovací pilulky odstraněny (Varianta A z briefu). Přidán sticky mobilní call CTA + telefon v desktop headeru. Přidány sekce `#proces` a `#faq`. 7 nových stroke ikon nahradilo opakovanou kapku v kartách (kapka zůstala jen ve wordmarku/patičce). `og:image` meta tag přidán (soubor zatím chybí).
-- **Poslední rozhodnutí (týž den, doplněk):** uživatel si vyžádal opak Varianty A — galerie rozšířena zpět na 10 placeholder dlaždic + přidán lightbox (zvětšení dlaždice po kliknutí, klávesnicí i myší ovladatelný, ESC/backdrop/close zavírají a vrací focus). Nahlášeno a provedeno jako reverzibilní úprava obsahu, ne jako tichá revize struktury. Stále žádné reálné fotky — JS je připravený převzít `<img>` místo placeholderu, až klient fotky dodá.
-- **Poslední rozhodnutí (2026-08-23):** přidána nová sekce `#reference` (mezi Galerie a FAQ) se 4 placeholder kartami — vědomě přepisuje redesignové rozhodnutí "žádná samostatná sekce reference, jen `.trust-note`". Nahlášeno jako reverzibilní obsahová změna, provedeno na výslovný pokyn uživatele. Žádný vymyšlený text/jméno/hodnocení zákazníka. Hero H1/lead mezitím upraveny na "Vrtání a čištění studní v Nymburce a okolí" (konzistentní s `areaServed` v schema).
-- **Vědomá odchylka od šablonového stat-stripu:** hero nepoužívá "roky praxe / rok založení" (nepotvrzeno), místo toho ukazuje potvrzené údaje — "4 lidi v partě" a "24/7 vodní pohotovost". Až klient potvrdí roky praxe, lze snadno přidat/nahradit.
-- **Formulář:** honeypot + inline validace + plné GDPR znění zachované beze změny. Odeslání teď jde přes `api/kontakt.js` (Vercel Node funkce, žádné npm závislosti) → Resend REST API, s loading/success/error stavy v UI. Otestováno lokálně přes `vercel dev --local` + Playwright (24 automatizovaných kontrol, včetně mockovaného úspěšného odeslání a reálného zavolání endpointu s neplatným klíčem). Reálné odeslání e-mailu nelze ověřit, dokud klient nemá `RESEND_API_KEY`.
-- **Otevřené otázky na uživatele:** logo (existuje? jaké barvy?), roky praxe/reálný začátek praxe, přesná dojezdová vzdálenost/území, reference/počet realizací, reálné fotografie (kolik a odkud), FAQ odpovědi (doba realizace, povolení/ohlášení, typická hloubka vrtu), `RESEND_API_KEY` + potvrzení k nasazení na Vercel — plný detail v `studny-prompt.md` a `memory/memory.md`.
-- **Co záměrně ještě není hotové a proč:** žádné reálné fotky nejsou nasazené (jasně značené placeholdery, včetně 4 nových referenčních karet); `og-image.jpg` soubor chybí (meta tag na něj odkazuje, čeká na reálnou fotku nebo grafiku); `RESEND_API_KEY` chybí na Vercelu, takže formulář na živé produkci teď reálně vrací chybu.
+- **Aktuální fáze:** web je živý na produkci, ale změny z této session ještě nejsou nasazené. Tech stack, design systém a one-pager struktura zůstávají stejné.
+- **Otevřené otázky na uživatele:** logo, roky praxe, reálné fotografie a obsah deseti referencí. `og-image.jpg` stále chybí.
+- **Poslední rozhodnutí (2026-09-09):** podle aktualizovaného klientského zadání je rozsah služeb přepsaný na kopané studny, servis stávajících vrtaných studní, vyhledávání pramene a řešení aktuálních výpadků vody. Firma nové vrtané studny nevrtá, neposkytuje pohotovost 24/7 a působí po celé ČR. Počet členů týmu se neuvádí; zákazník se domlouvá s majitelem firmy. Kontaktní formulář i endpoint Resend byly odstraněny, zůstává telefon a e-mail. Galerie má ovládání předchozí/další, sekce reference obsahuje 10 placeholderů.
 
 ## 6. Co dělat, když prompt uživatele koliduje s tímto dokumentem
 
