@@ -53,9 +53,9 @@ Než uděláš jakoukoli změnu kódu nebo začneš na novém promptu:
 
 Tuto sekci aktualizuj na konci každé session — je to jediný způsob, jak další session (která si nic z téhle nepamatuje) naváže v kontinuitě. Zápisy krátké, jen fakta, ne popis procesu.
 
-- **Aktuální fáze:** web je živý na produkci, ale změny z této session ještě nejsou nasazené. Tech stack, design systém a one-pager struktura zůstávají stejné.
-- **Otevřené otázky na uživatele:** logo, roky praxe, reálné fotografie a obsah deseti referencí. `og-image.jpg` stále chybí.
-- **Poslední rozhodnutí (2026-09-09):** podle aktualizovaného klientského zadání je rozsah služeb přepsaný na kopané studny, servis stávajících vrtaných studní, vyhledávání pramene a řešení aktuálních výpadků vody. Firma nové vrtané studny nevrtá, neposkytuje pohotovost 24/7 a působí po celé ČR. Počet členů týmu se neuvádí; zákazník se domlouvá s majitelem firmy. Kontaktní formulář i endpoint Resend byly odstraněny, zůstává telefon a e-mail. Galerie má ovládání předchozí/další, sekce reference obsahuje 10 placeholderů.
+- **Aktuální fáze:** web je živý na produkci na https://studny-petr.vercel.app (Vercel projekt propojený s GitHub repem `sobotkakrystof5-png/Studny-Petr-`, auto-deploy na push do `main`). Commit `45dffd1` pushnut a nasazen 2026-09-09 — produkce ověřena, obsahuje aktuální obsah i UI polish. Tech stack, design systém a one-pager struktura zůstávají stejné.
+- **Otevřené otázky na uživatele:** logo, roky praxe, reálné fotografie. `og-image.jpg` stále chybí. (Reference už nejsou otevřená otázka — nahrazeny 10 reálnými, zdrojovanými ohlasy, viz níže.)
+- **Poslední rozhodnutí (2026-09-09):** podle aktualizovaného klientského zadání je rozsah služeb přepsaný na kopané studny, servis stávajících vrtaných studní, vyhledávání pramene a řešení aktuálních výpadků vody. Firma nové vrtané studny nevrtá, neposkytuje pohotovost 24/7 a působí po celé ČR. Počet členů týmu se neuvádí; zákazník se domlouvá s majitelem firmy. Kontaktní formulář i endpoint Resend byly odstraněny, zůstává telefon a e-mail. Galerie má ovládání předchozí/další (ikonové šipky). Sekce Reference nahrazena 10 reálnými ohlasy zákazníků s citovaným zdrojem (Google recenze, Nejřemeslníci.cz) místo placeholderů. Web doplněn o jemné UI animace (scroll-reveal, hover, plynulý FAQ accordion, lightbox fade) s `prefers-reduced-motion` podporou. Nasazeno na produkci.
 
 ## 6. Co dělat, když prompt uživatele koliduje s tímto dokumentem
 
