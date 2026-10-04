@@ -108,8 +108,10 @@ header.site{
 }
 header.site.is-scrolled{box-shadow:0 6px 18px rgba(12,38,46,.12);}
 .wordmark{display:flex; align-items:center; gap:8px; text-decoration:none; color:var(--well-900); font-family:var(--font-heading); font-weight:700; font-size:1.15rem;}
-.wordmark .drop-icon{width:22px; height:22px; color:var(--drop); transition:transform var(--dur) var(--ease);}
-.wordmark:hover .drop-icon{transform:translateY(-2px) scale(1.1);}
+.wordmark .logo-mark{height:42px; width:auto; aspect-ratio:383/540; --logo-light:var(--well-900); flex-shrink:0; transition:transform var(--dur) var(--ease);}
+.wordmark:hover .logo-mark{transform:translateY(-2px) scale(1.06);}
+header.site .wordmark{margin-left:clamp(0px,2.5vw,40px);}
+footer.site .wordmark .logo-mark{height:52px; --logo-light:#fff;}
 header.site nav.desktop-nav{display:flex; gap:var(--space-md); flex-wrap:wrap;}
 header.site nav.desktop-nav a{position:relative; text-decoration:none; font-weight:600; font-size:.95rem; color:var(--fg); padding-bottom:3px; transition:color var(--dur) var(--ease);}
 header.site nav.desktop-nav a::after{
